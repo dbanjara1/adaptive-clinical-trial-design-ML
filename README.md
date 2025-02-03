@@ -52,18 +52,21 @@ Run the data_generation.py script to generate synthetic clinical trial data:
 bash
 Copy
 python scripts/data_generation.py
+
 2. Train and Evaluate Models
 Run the model_training.py script to train and evaluate machine learning models:
 
 bash
 Copy
 python scripts/model_training.py
+
 3. Hyperparameter Tuning
 Run the hyperparameter_tuning.py script to optimize model hyperparameters:
 
 bash
 Copy
 python scripts/hyperparameter_tuning.py
+
 4. Exploratory Data Analysis
 Open the exploratory_analysis.ipynb notebook to explore the dataset and visualize results.
 
