@@ -104,9 +104,9 @@ Open the exploratory_analysis.ipynb notebook to explore the dataset and visualiz
 
 ## Results
 
-Best Model: XGBoost with an accuracy of 75% on the test set.
+Best Model: XGBoost with an accuracy of 60% on the test set.
 
-Feature Importance: Biomarker level and treatment group were the most important features.
+Feature Importance: Biomarker level and gender_male were the most important features.
 
 ## License
 
