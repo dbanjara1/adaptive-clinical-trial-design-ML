@@ -95,10 +95,12 @@ python scripts/hyperparameter_tuning.py
 4. Exploratory Data Analysis
 Open the exploratory_analysis.ipynb notebook to explore the dataset and visualize results.
 
-Results
+## Results
+
 Best Model: XGBoost with an accuracy of 75% on the test set.
 
 Feature Importance: Biomarker level and treatment group were the most important features.
 
-License
+## License
+
 This project is licensed under the MIT License. See the LICENSE file for details.
