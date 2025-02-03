@@ -4,14 +4,13 @@ from xgboost import XGBClassifier
 from sklearn.metrics import accuracy_score, classification_report
 
 # Load the synthetic data
-df = pd.read_csv("data/synthetic_data.csv")
+df = pd.read_csv("data/adaptive_clinical_trial_data.csv")
 
 # Encode categorical variables
-df["Gender"] = df["Gender"].map({"Male": 0, "Female": 1})
-df["Treatment_Group"] = df["Treatment_Group"].map({"Control": 0, "Treatment": 1})
+df = pd.get_dummies(df, columns=["Gender", "Ethnicity", "Smoking_Status", "Treatment_Group"], drop_first=True)
 
 # Define features and target
-X = df[["Age", "Gender", "Biomarker_Level", "Treatment_Group"]]
+X = df.drop(columns=["Patient_ID", "Outcome"])
 y = df["Outcome"]
 
 # Split data into training and testing sets
