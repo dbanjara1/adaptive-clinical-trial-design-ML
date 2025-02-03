@@ -1,39 +1,34 @@
+import optuna
+import numpy as np
 import pandas as pd
-from sklearn.model_selection import GridSearchCV
 from xgboost import XGBClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
 
-# Load the synthetic data
-df = pd.read_csv("data/synthetic_data.csv")
+# Ensure X_train, y_train are correctly formatted
+X_train, X_valid, y_train, y_valid = train_test_split(X_train, y_train, test_size=0.2, random_state=42)
 
-# Encode categorical variables
-df["Gender"] = df["Gender"].map({"Male": 0, "Female": 1})
-df["Treatment_Group"] = df["Treatment_Group"].map({"Control": 0, "Treatment": 1})
+# Define the Optuna objective function
+def objective(trial):
+    params = {
+        "n_estimators": trial.suggest_int("n_estimators", 50, 300),
+        "max_depth": trial.suggest_int("max_depth", 3, 10),
+        "learning_rate": trial.suggest_float("learning_rate", 0.01, 0.3, log=True),
+        "subsample": trial.suggest_float("subsample", 0.5, 1.0),
+        "colsample_bytree": trial.suggest_float("colsample_bytree", 0.5, 1.0)
+    }
 
-# Define features and target
-X = df[["Age", "Gender", "Biomarker_Level", "Treatment_Group"]]
-y = df["Outcome"]
+    model = XGBClassifier(**params, random_state=123, eval_metric="logloss")
+    model.fit(X_train, y_train)
 
-# Define the parameter grid for XGBoost
-param_grid = {
-    "n_estimators": [50, 100, 200],
-    "max_depth": [3, 5, 7],
-    "learning_rate": [0.01, 0.1, 0.2],
-    "subsample": [0.8, 0.9, 1.0],
-    "colsample_bytree": [0.8, 0.9, 1.0]
-}
+    y_pred = model.predict(X_valid)
+    accuracy = accuracy_score(y_valid, y_pred)
+    
+    return accuracy
 
-# Initialize GridSearchCV
-grid_search = GridSearchCV(
-    estimator=XGBClassifier(random_state=123, use_label_encoder=False, eval_metric="logloss"),
-    param_grid=param_grid,
-    scoring="accuracy",
-    cv=5,
-    n_jobs=-1
-)
+# Run the optimization
+study = optuna.create_study(direction="maximize")
+study.optimize(objective, n_trials=20)
 
-# Perform grid search
-grid_search.fit(X, y)
-
-# Print the best parameters and accuracy
-print("Best Parameters:", grid_search.best_params_)
-print("Best Accuracy:", grid_search.best_score_)
+# Print best parameters
+print("Best Parameters:", study.best_params)
