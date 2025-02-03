@@ -36,10 +36,17 @@ Impact:
 
 🧑‍🔬 What This Dataset Contains
 
-Demographics (Age, Gender)
-Biomarkers (indicating treatment impact)
-Randomized Treatment Assignments (Treatment vs. Control)
-Binary Outcome (0 = No Response, 1 = Response)
+Patient Demographics: Age, gender, ethnicity, etc.
+
+Medical History: Pre-existing conditions, prior treatments, etc.
+
+Treatment Details: Drug dosage, treatment duration, etc.
+
+Biomarkers: Multiple biomarkers (e.g., blood pressure, cholesterol levels, etc.).
+
+Adverse Events: Occurrence of adverse events during the trial.
+
+Outcome: Primary outcome (e.g., response to treatment).
 
 ## Folder Structure
 
